@@ -1,0 +1,29 @@
+
+.sim-mode-toggle {
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sim-mode-btn {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover:not(.sim-mode-btn--active) {
+    background: #f3f4f6;
+  }
+
+  &--active {
+    background: #0056b3;
+    color: #fff;
+    cursor: default;
+  }
+}

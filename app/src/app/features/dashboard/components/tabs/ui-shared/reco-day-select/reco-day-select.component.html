@@ -1,0 +1,14 @@
+@if (options.length > 1) {
+  <div class="reco-day-select">
+    <select
+      class="reco-day-select__input"
+      [id]="controlId"
+      [ngModel]="selectedId"
+      (ngModelChange)="onChange($event)"
+    >
+      @for (opt of options; track opt.id) {
+        <option [value]="opt.id">{{ opt.label }}</option>
+      }
+    </select>
+  </div>
+}

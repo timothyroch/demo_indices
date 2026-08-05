@@ -1,0 +1,98 @@
+=================================================================
+VILLE_IA — Data Quality Report — McGill / McTavish
+Generated: 2026-03-02 16:40:27
+=================================================================
+
+Station group: WTA_mctavish
+Stations:      10761 (MCTAVISH)
+Rows:          3975
+Columns:       48
+Date range:    2000-05-01 → 2025-09-27
+
+Expected summer days: 3975
+Actual days:          3975
+Missing days:         0
+
+Missing values per column:
+  Column                               Missing        %
+  ----------------------------------- -------- --------
+  temp_max_c                                68     1.7%
+  temp_min_c                                51     1.3%
+  temp_mean_c                               69     1.7%
+  total_rain_mm                           3975   100.0%
+  total_snow_cm                           3975   100.0%
+  total_precip_mm                          153     3.8%
+  humidity_mean_pct                         20     0.5%
+  humidity_min_pct                          20     0.5%
+  humidity_max_pct                          20     0.5%
+  wind_speed_mean_kmh                      101     2.5%
+  wind_speed_max_kmh                       101     2.5%
+  dew_point_mean_c                          20     0.5%
+  dew_point_max_c                           20     0.5%
+  pressure_mean_kpa                        171     4.3%
+  visibility_mean_km                      3975   100.0%
+  temp_hourly_mean_c                        20     0.5%
+  tmax_roll_3d                              28     0.7%
+  tmin_roll_3d                              24     0.6%
+  humidity_roll_3d                          18     0.5%
+  dew_point_roll_3d                         18     0.5%
+  tmax_roll_7d                              21     0.5%
+  tmin_roll_7d                              20     0.5%
+  humidity_roll_7d                          14     0.4%
+  dew_point_roll_7d                         14     0.4%
+  tmax_roll_14d                             14     0.4%
+  tmin_roll_14d                             13     0.3%
+  humidity_roll_14d                          7     0.2%
+  dew_point_roll_14d                         7     0.2%
+  precip_7d                                 51     1.3%
+  precip_14d                                44     1.1%
+  tmax_change_1d                           103     2.6%
+  tmax_change_3d                           113     2.8%
+  temp_anomaly                              68     1.7%
+  heat_degree_above_30                      68     1.7%
+  heat_accumulation_7d                      21     0.5%
+  humidex                                  986    24.8%
+  humidex_roll_3d                          451    11.3%
+
+Summary statistics (key columns):
+       temp_max_c  temp_min_c  humidity_mean_pct  wind_speed_mean_kmh
+count     3907.00     3924.00            3955.00              3874.00
+mean        23.48       14.47              65.58                 5.92
+std          5.10        4.56              13.44                 1.81
+min          4.80       -0.20              24.17                 0.57
+25%         20.30       11.50              57.08                 4.79
+50%         24.10       15.00              66.00                 5.75
+75%         27.20       17.80              75.00                 6.79
+max         36.60       25.50             100.00                17.62
+
+Heatwave event days per year:
+  2000:   0 days
+  2001:   5 days  █████
+  2002:   6 days  ██████
+  2003:   0 days
+  2004:   0 days
+  2005:   0 days
+  2006:   0 days
+  2007:   0 days
+  2008:   0 days
+  2009:   0 days
+  2010:   4 days  ████
+  2011:   0 days
+  2012:   0 days
+  2013:   0 days
+  2014:   0 days
+  2015:   0 days
+  2016:   0 days
+  2017:   0 days
+  2018:   6 days  ██████
+  2019:   0 days
+  2020:   6 days  ██████
+  2021:   7 days  ███████
+  2022:   0 days
+  2023:   0 days
+  2024:   0 days
+  2025:   6 days  ██████
+
+Target class balance (target_heatwave_3d):
+  Positive (heatwave coming):     56 (1.41%)
+  Negative (no heatwave):       3919 (98.59%)

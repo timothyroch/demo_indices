@@ -1,0 +1,186 @@
+<app-tab-status-gate
+  [status]="status"
+  [errorMessage]="errorMessage"
+>   
+  @if (heatwave) {
+    <div class="risk-indicator">
+      <div class="tab-title">{{ strings.TITLE }}</div>
+    </div> 
+    
+    @if (today) {
+      <div class="panel-section">
+        <div class="section-title-with-info">
+          <div class="section-title">{{ sectionTitleStrings.TODAY_TITLE }}</div>
+          <app-risk-badge
+            [riskLevelClass]="riskLevelClass"
+            [riskLevelLabel]="riskLabel"
+          />
+        </div>
+
+        <ng-template #legendTemplate>
+          <div class="hw-legend-content">
+            @for (level of humidexScale; track level.label) {
+              <div class="hw-legend-item">
+                <span class="hw-legend-dot" [style.background]="level.bg" style="display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 2px; flex-shrink: 0; margin-right: 0.75rem;"></span>
+                <span class="hw-legend-range">
+                  @if (level.max === Infinity) {
+                    {{ strings.LEGEND_PREFIX_ABOVE }} {{ level.min - 1 }}
+                  } @else {
+                    {{ strings.LEGEND_PREFIX_RANGE }} {{ level.min }} {{ strings.LEGEND_SEPARATOR }} {{ level.max }}
+                  }
+                </span>
+                <span class="hw-legend-label" style="font-weight: 500; margin-left: 0.5rem;">{{ level.label }}</span>
+              </div>
+            }
+            <div class="source" style="margin-top: 0.5rem; font-size: 0.7rem; color: #d1d5db;">{{ strings.LEGEND_SOURCE }}</div>
+          </div>
+        </ng-template>
+
+        <div class="hw-scale-container">
+          <div class="hw-scale-header">
+            <span class="hw-scale-title" [title]="strings.TOOLTIP_HUMIDEX">{{ strings.HUMIDEX_LEVEL_LABEL }}</span>
+            <app-info-bubble [templateContent]="legendTemplate" [message]="strings.TOOLTIP_HUMIDEX" />
+          </div>
+          <div class="hw-scale-bar">
+            <div class="hw-scale-marker" [style.left.%]="scalePosition"
+                [title]="strings.HUMIDEX_PREFIX + today.prediction_value">
+            </div>
+          </div>
+          <div class="hw-scale-ticks">
+            <span>20</span>
+            <span>30</span>
+            <span>40</span>
+            <span>50</span>
+          </div>
+        </div>
+
+        <div class="hw-metrics">
+          <div class="hw-metric">
+            <span class="hw-metric-label">{{ strings.METRIC_HUMIDEX }}</span>
+            @if (isHumidexAvailable(today.prediction_value)) {
+              <span class="hw-metric-value"
+                    [style.color]="'#111827'">
+                {{ today.prediction_value }}
+              </span>
+            }
+            @else {
+              <span class="hw-metric-value hw-na">N/A</span>
+            }
+          </div>
+          <div class="hw-metric">
+            <span class="hw-metric-label">{{ strings.METRIC_TEMP_MAX }}</span>
+            <span class="hw-metric-value">{{ today.temperature_max }}°C</span>
+          </div>
+          <div class="hw-metric">
+            <span class="hw-metric-label">{{ strings.METRIC_TEMP_MIN }}</span>
+            <span class="hw-metric-value">{{ today.temperature_min }}°C</span>
+          </div>
+          <div class="hw-metric">
+            <span class="hw-metric-label">{{ strings.METRIC_HUMIDITY }}</span>
+            <span class="hw-metric-value">{{ today.relative_humidity_max }}%</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="panel-section hw-recommendations">
+      <div class="hw-section-header" (click)="toggleRecommendations()" (keydown)="$event.key === 'Enter' && toggleRecommendations()" tabindex="0" role="button" [attr.aria-expanded]="!isRecommendationsCollapsed">
+        <div class="section-title">{{ strings.RECOMMENDATIONS_TITLE }}</div>
+        <div class="hw-section-header-actions">
+          <app-info-bubble [message]="strings.RECOMMENDATIONS_INTRO" />
+          <button class="collapse-btn" [attr.aria-label]="isRecommendationsCollapsed ? strings.EXPAND_ARIA : strings.COLLAPSE_ARIA">
+            <span class="chevron" [class.collapsed]="isRecommendationsCollapsed">{{ isRecommendationsCollapsed ? strings.EXPAND_ICON : strings.COLLAPSE_ICON }}</span>
+          </button>
+        </div>
+      </div>
+
+      @if (!isRecommendationsCollapsed) {
+      <div class="section-content">
+        <div class="hw-recommendations-content">
+          <div class="hw-recommendations-category">
+            <div class="hw-recommendations-category-title">{{ strings.RECOMMENDATIONS_CATEGORY_HYDRATION }}</div>
+            <ul class="hw-recommendations-list">
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HYDRATION_1 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HYDRATION_2 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HYDRATION_3 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HYDRATION_4 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HYDRATION_5 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HYDRATION_6 }}</li>
+            </ul>
+          </div>
+
+          <div class="hw-recommendations-category">
+            <div class="hw-recommendations-category-title">{{ strings.RECOMMENDATIONS_CATEGORY_PUBLIC_PLACES }}</div>
+            <ul class="hw-recommendations-list">
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_PUBLIC_PLACES_1 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_PUBLIC_PLACES_2 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_PUBLIC_PLACES_3 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_PUBLIC_PLACES_4 }}</li>
+            </ul>
+          </div>
+
+          <div class="hw-recommendations-category">
+            <div class="hw-recommendations-category-title">{{ strings.RECOMMENDATIONS_CATEGORY_HOME }}</div>
+            <ul class="hw-recommendations-list">
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HOME_1 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HOME_2 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HOME_3 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HOME_4 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_HOME_5 }}</li>
+            </ul>
+          </div>
+
+          <div class="hw-recommendations-category">
+            <div class="hw-recommendations-category-title">{{ strings.RECOMMENDATIONS_CATEGORY_SYMPTOMS }}</div>
+            <ul class="hw-recommendations-list">
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_SYMPTOMS_1 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_SYMPTOMS_2 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_SYMPTOMS_3 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_SYMPTOMS_4 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_SYMPTOMS_5 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_SYMPTOMS_6 }}</li>
+            </ul>
+          </div>
+
+          <div class="hw-recommendations-emergency">
+            <div class="hw-recommendations-emergency-title">{{ strings.RECOMMENDATIONS_EMERGENCY_TITLE }}</div>
+            <div class="hw-recommendations-emergency-text">{{ strings.RECOMMENDATIONS_EMERGENCY_TEXT }}</div>
+          </div>
+
+          <div class="hw-recommendations-category">
+            <div class="hw-recommendations-category-title">{{ strings.RECOMMENDATIONS_CATEGORY_VULNERABLE }}</div>
+            <ul class="hw-recommendations-list">
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_VULNERABLE_1 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_VULNERABLE_2 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_VULNERABLE_3 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_VULNERABLE_4 }}</li>
+              <li class="hw-recommendations-item">{{ strings.RECOMMENDATIONS_VULNERABLE_5 }}</li>
+            </ul>
+          </div>
+
+          <div class="hw-recommendations-check">
+            <div class="hw-recommendations-check-title">{{ strings.RECOMMENDATIONS_CHECK_LOVED_ONES }}</div>
+            <div class="hw-recommendations-check-text">{{ strings.RECOMMENDATIONS_CHECK_LOVED_ONES_TEXT }}</div>
+          </div>
+        </div>
+      </div>
+      }
+
+      <div class="hw-recommendations-source">{{ strings.RECOMMENDATIONS_SOURCE }}</div>
+    </div>
+    <app-forecast-content
+      [forecast]="heatwave.daily_details"
+      [simulatedForecast]="simulatedDailyDetails"
+      [columns]="columns"
+      [isSimulationOpen]="isSimulationOpen"
+      [probabilityTooltip]="getHumidexTooltip"
+      [rowClassFn]="rowClassFn"
+      (openSimulation)="openSimulation()"
+      (closeSimulation)="closeSimulation()"
+      (applySimulation)="applySimulation()"
+      (resetSimulation)="resetSimulationDetails()"
+    />
+
+  }
+  
+</app-tab-status-gate>

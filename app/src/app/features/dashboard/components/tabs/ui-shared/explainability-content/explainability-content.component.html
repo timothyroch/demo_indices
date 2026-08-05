@@ -1,0 +1,22 @@
+<div class="panel-section">
+    <div class="section-title">{{ sectionTitle }}</div>
+    @for (feature of explainability; track feature.rank) {
+    <div class="feature-row">
+        <div class="feature-meta">
+        <span class="feature-label">{{ feature.rank }}. {{ feature.label }}</span>
+        <span class="feature-value">{{ feature.value }} {{ feature.unit }}</span>
+        </div>
+        <div class="feature-bar-row">
+        <div
+            class="feature-bar"
+            [class.feature-bar--up]="feature.direction === 'up'"
+            [class.feature-bar--down]="feature.direction === 'down'"
+            [style.width.%]="feature.weight_pct"
+        ></div>
+        <span class="feature-strength">
+            {{ feature.direction_label }} {{ feature.strength_label }}
+        </span>
+        </div>
+    </div>
+    }
+</div>

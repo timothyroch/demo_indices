@@ -1,0 +1,48 @@
+<app-tab-status-gate
+  [status]="status"
+  [errorMessage]="errorMessage"
+> 
+  <div class="risk-indicator">
+    <div class="tab-title">{{ floodStrings.PLUVIAL_SECTION_TITLE }}</div>
+  </div>
+  <app-floods-today-content
+    [probabilityLabel]="floodProbabilityLabel"
+    [riskScore]="riskScore"
+    [confidenceStd]="confidenceStd"
+    [infobubbleProbabilityText]="infobubbleProbabilityText"
+    [infobubbleRiskText]="infobubbleRiskText"
+    [rainIntensityInfo]="prediction?.rain_intensity_info ?? null"
+    [riskLevelClass]="riskLevelClass"
+    [riskLevelLabel]="riskLevelLabel"
+    [activePartnerCity]="activePartnerCity"
+    [zoneData]="zoneDataService.getCurrentZoneData(this.panelSlot)"
+  />
+  <app-explainability-content
+    [explainability]="prediction?.explainability ?? null"
+  />
+  <app-recommendations
+    [contentByCity]="pluvialPublicRecoByCity"
+    riskKind="pluvial"
+    [severity]="recommendationSeverity"
+    [activePartnerCity]="activePartnerCity"
+    [recoDayOptions]="recoDayOptions"
+    [(selectedDayId)]="recoDayId" 
+    (selectedDayIdChange)="onRecoDayChange($event)"
+  />
+  @if (prediction?.forecast?.length) {
+    <app-forecast-content
+      [forecast]="prediction!.forecast!"
+      [simulatedForecast]="simulatedForecast"
+      [columns]="columns"
+      [sectionSubtitle]="floodStrings.PLUVIAL_FORECAST_SUBTITLE"
+      [isSimulationOpen]="isSimulationOpen"
+      [isSimulating]="isSimulating"
+      [probabilityTooltip]="getProbabilityTooltip"
+      (openSimulation)="openSimulation()"
+      (closeSimulation)="closeSimulation()"
+      (applySimulation)="applySimulation()"
+      (resetSimulation)="resetSimulationDetails()"
+    />
+  }
+ <app-risk-zones-content [config]="riskZoneConfig" [panelSlot]="panelSlot" />
+</app-tab-status-gate>   

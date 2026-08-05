@@ -1,0 +1,103 @@
+<div class="panel-section">
+  <div class="forecast-section-header">
+    <div>
+      <div class="section-title">{{ forecastTitleString }}</div>
+      <div class="section-subtitle">{{ sectionSubtitle }}</div>
+    </div>
+    <app-simulation-mode-toggle
+      [isSimulationOpen]="isSimulationOpen"
+      (forecastClick)="closeSimulation.emit()"
+      (simulationClick)="openSimulation.emit()"
+    />
+  </div>
+
+  <div
+    class="forecast-table"
+    [class.forecast-table--simulation]="isSimulationOpen"
+    [class.forecast-table--loading]="isSimulating"
+    [style.--forecast-columns]="columns.length"
+  >
+    <div class="forecast-table-header">
+      <span>{{ columns[0].label }}</span>
+      @for (column of columns.slice(1); track column.label) {
+        <span class="forecast-table-value">{{ column.label }}</span>
+      }
+    </div>
+
+    @let predictionColumn = columns[columns.length - 1];
+    @if (isSimulationOpen) {
+      @for (day of simulatedForecast; track $index; let i = $index) {
+        @let risk = rowRiskLevel(day);
+        <div
+          class="forecast-table-row"
+          [class.fc-risk-low]="risk === rowRisk.LOW"
+          [class.fc-risk-moderate]="risk === rowRisk.MODERATE"
+          [class.fc-risk-high]="risk === rowRisk.HIGH"
+        >
+          <span class="forecast-date">{{ formatDate(day.date) }}</span>
+          @for (column of columns.slice(1, -1); track column.label) {
+            <span>
+              @if (column.simField) {
+                <input
+                  type="number"
+                  inputmode="decimal"
+                  class="forecast-table-value"
+                  [disabled]="isSimulating"
+                  [(ngModel)]="simulatedForecast[i][column.simField]"
+                />
+              } @else {
+                <span class="forecast-table-value">{{ column.display(day) }}</span>
+              }
+            </span>
+          }
+          <span
+            class="forecast-prob"
+            [class.fc-risk-low]="risk === rowRisk.LOW"
+            [class.fc-risk-moderate]="risk === rowRisk.MODERATE"
+            [class.fc-risk-high]="risk === rowRisk.HIGH"
+          >
+            {{ predictionColumn.display(day) }}
+            @if (probabilityTooltip) {
+              <app-info-bubble [message]="probabilityTooltip(day)" />
+            }
+          </span>
+
+        </div>
+      }
+    } @else {
+      @for (day of forecast; track $index) {
+        @let risk = rowRiskLevel(day);
+        <div
+          class="forecast-table-row"
+          [class.fc-risk-low]="risk === rowRisk.LOW"
+          [class.fc-risk-moderate]="risk === rowRisk.MODERATE"
+          [class.fc-risk-high]="risk === rowRisk.HIGH"
+        >
+          <span class="forecast-date">{{ formatDate(day.date) }}</span>
+          @for (column of columns.slice(1, -1); track column.label) {
+            <span class="forecast-table-value">{{ column.display(day) }}</span>
+          }
+          <span
+            class="forecast-prob"
+            [class.fc-risk-low]="risk === rowRisk.LOW"
+            [class.fc-risk-moderate]="risk === rowRisk.MODERATE"
+            [class.fc-risk-high]="risk === rowRisk.HIGH"
+          >
+            {{ predictionColumn.display(day) }}
+            @if (probabilityTooltip) {
+              <app-info-bubble [message]="probabilityTooltip(day)" />
+            }
+          </span>
+
+        </div>
+      }
+    }
+  </div>
+
+  @if (isSimulationOpen) {
+    <app-simulation-actions
+      (applySimulation)="applySimulation.emit()"
+      (resetSimulation)="resetSimulation.emit()"
+    />
+  }
+</div>

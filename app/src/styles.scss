@@ -1,0 +1,169 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --primary-dark: #1e293b;
+  --white: #ffffff;
+  --background-light: #f1f5f9;
+  --text-dark: #1e293b;
+  --accent-teal: #0d9488;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+  color: #2a2d2d;
+}
+
+.panel-section {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.mapboxgl-ctrl-bottom-right,
+.mapboxgl-ctrl-top-right,
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-top-left {
+  display: none !important;
+}
+
+.forecast-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  .section-title {
+    margin-bottom: 0;
+  }
+}
+
+.source {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: #6b7280;
+  text-align: right;
+  line-height: 1.2;
+  font-style: italic;
+}
+
+.risk-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tab-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.risk-info-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+ 
+// Zone floodability badge
+.risk-info-zone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  width: fit-content;
+ 
+  &.floodable {
+    background-color: rgba(var(--color-risk-high-rgb, 220, 53, 69), 0.12);
+    color: var(--color-risk-high, #dc3545);
+ 
+    &::before {
+      content: '⚠';
+    }
+  }
+ 
+  &.not-floodable {
+    background-color: rgba(var(--color-risk-low-rgb, 40, 167, 69), 0.12);
+    color: var(--color-risk-low, #28a745);
+ 
+    &::before {
+      content: '✓';
+    }
+  }
+}
+ 
+// Social stats table
+.risk-info-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+  padding-top: 8px;
+}
+ 
+.risk-info-stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+ 
+.risk-info-stat-label {
+  color: var(--color-text-muted, #c0c8cf);
+  font-size: 0.8rem;
+  flex: 1;
+  min-width: 0;
+}
+ 
+.risk-info-stat-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+ 
+.risk-info-arrow {
+  font-size: 1.2rem;
+ 
+  &--up {
+    color: var(--color-risk-high, #dc3545);
+  }
+ 
+  &--down {
+    color: var(--color-risk-low, #28a745);
+  }
+}

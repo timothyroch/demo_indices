@@ -1,0 +1,46 @@
+
+.sim-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.sim-btn-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sim-btn {
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) { opacity: 0.85; }
+  &:active:not(:disabled) { opacity: 0.7; }
+
+  &--apply {
+    border: 1px solid #0056b3;
+    background: #c8dff9;
+    color: #282828;
+  }
+
+  &--reset {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+
+    &:hover:not(:disabled) {
+      background: #f9fafb;
+      opacity: 1;
+    }
+  }
+}

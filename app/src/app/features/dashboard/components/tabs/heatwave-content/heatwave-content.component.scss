@@ -1,0 +1,274 @@
+.hw-scale-container {
+  margin-bottom: 0.75rem;
+}
+
+.section-title-with-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hw-scale-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.hw-scale-title {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.hw-scale-current-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hw-scale-bar {
+  margin-top: 0.5rem;
+  position: relative;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(
+    to right,
+    #4caf50 0%,
+    #ffeb3b 33%,
+    #ff9800 66%,
+    #f44336 100%
+  );
+}
+
+.hw-scale-marker {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #111827;
+  transform: translate(-50%, -50%);
+  cursor: help;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  transition: left 0.4s ease;
+}
+
+.hw-scale-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.2rem;
+  padding: 0 0.15rem;
+}
+
+.hw-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.hw-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.hw-metric-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+.hw-metric-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.hw-legend {
+  margin-top: 1rem;
+}
+
+.hw-legend-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hw-legend-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.hw-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hw-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hw-legend-text {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.hw-legend-range {
+  font-weight: 700;
+  min-width: 5.5rem;
+  color: #bcc1c8;
+}
+
+.hw-legend-label {
+  color: #e6e9ed;
+}
+
+.hw-recommendations {
+  margin-top: 1rem;
+}
+
+.hw-recommendations-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hw-recommendations-category {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hw-recommendations-category-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.hw-recommendations-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.8125rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.hw-recommendations-item {
+  margin-bottom: 0.25rem;
+}
+
+.hw-recommendations-emergency {
+  margin: 0.5rem 0;
+}
+
+.hw-recommendations-emergency-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.35rem;
+}
+
+.hw-recommendations-emergency-text {
+  font-size: 0.8125rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.hw-recommendations-check {
+  margin: 0.5rem 0;
+}
+
+.hw-recommendations-check-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.35rem;
+}
+
+.hw-recommendations-check-text {
+  font-size: 0.8125rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.hw-recommendations-source {
+  margin-top: 0.75rem;
+  font-size: 0.65rem;
+  color: #9ca3af;
+  font-style: italic;
+  text-align: right;
+}
+
+.hw-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 0.6rem;
+
+  &:focus {
+    outline: none;
+  }
+
+  .section-title {
+    margin-bottom: 0;
+  }
+}
+
+.hw-section-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.collapse-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #374151;
+  }
+}
+
+.chevron {
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+
+  &.collapsed {
+    transform: rotate(-90deg);
+  }
+}
+
+.section-content {
+  animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 2000px;
+  }
+}

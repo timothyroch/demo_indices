@@ -1,0 +1,56 @@
+@if (showSocialData && socialIndicators; as si) {
+  <div class="panel-section">
+    <div class="social-data-section">
+      <div class="social-data-title">{{ strings.SOCIAL_INDICATORS_TITLE }}</div>
+      <div class="social-data-grid">
+        @if (si.pct_65_plus.value !== null && si.pct_65_plus.value !== undefined) {
+          <div class="social-data-item">
+            <span class="data-label">{{ strings.PCT_65_PLUS_LABEL }}</span>
+            <div class="data-comparison">
+              <span class="data-value">{{ si.pct_65_plus.value.toFixed(1) }}%</span>
+              <span class="data-avg" [class.above]="(si.pct_65_plus.diff ?? 0) > 0">
+                {{ strings.AVERAGE_PREFIX }} {{ (si.pct_65_plus.avg).toFixed(1) }}%
+              </span>
+            </div>
+          </div>
+        }
+        @if (si.revenu_median_menage.value !== null && si.revenu_median_menage.value !== undefined) {
+          <div class="social-data-item">
+            <span class="data-label">{{ strings.REVENU_MEDIAN_LABEL }}</span>
+            <div class="data-comparison">
+              <span class="data-value">{{ (si.revenu_median_menage.value / 1000).toFixed(0) }}{{ strings.CURRENCY_UNIT }}</span>
+              <span class="data-avg" [class.above]="(si.revenu_median_menage.diff ?? 0) > 0">
+                {{ strings.AVERAGE_PREFIX }} {{ (si.revenu_median_menage.avg / 1000).toFixed(0) }}{{ strings.CURRENCY_UNIT }}
+              </span>
+            </div>
+          </div>
+        }
+        @if (si.gini.value !== null && si.gini.value !== undefined) {
+          <div class="social-data-item">
+            <div class="data-label-row">
+              <span class="data-label">{{ strings.GINI_INDEX_LABEL }}</span>
+              <app-info-bubble [message]="strings.GINI_TOOLTIP" />
+            </div>
+            <div class="data-comparison">
+              <span class="data-value">{{ si.gini.value.toFixed(3) }}</span>
+              <span class="data-avg" [class.above]="(si.gini.diff ?? 0) > 0">
+                {{ strings.AVERAGE_PREFIX }} {{ (si.gini.avg).toFixed(3) }}
+              </span>
+            </div>
+          </div>
+        }
+        @if (si.logement_reparations_majeures.value !== null && si.logement_reparations_majeures.value !== undefined) {
+          <div class="social-data-item">
+            <span class="data-label">{{ strings.LOGEMENT_REPAIRS_LABEL }}</span>
+            <div class="data-comparison">
+              <span class="data-value">{{ si.logement_reparations_majeures.value.toFixed(1) }}%</span>
+              <span class="data-avg" [class.above]="(si.logement_reparations_majeures.diff ?? 0) > 0">
+                {{ strings.AVERAGE_PREFIX }} {{ (si.logement_reparations_majeures.avg).toFixed(1) }}%
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

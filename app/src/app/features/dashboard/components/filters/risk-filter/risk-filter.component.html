@@ -1,0 +1,48 @@
+<section class="slider-section">
+  <span class="section-title">{{ topTitle }}</span>
+
+  <div class="slider-value-row">
+    <span class="value-prefix">{{ prefixLabel }}</span>
+    <div class="combined-input-wrapper" [ngClass]="'text-' + cfg.mode + '-' + levelClass">
+        <input
+          id="score-threshold-inline"
+          type="number"
+          class="value-input"
+          [min]="cfg.min" [max]="cfg.max" [step]="cfg.step"
+          inputmode="decimal" autocomplete="off"
+          [ngModel]="isEditingScoreThreshold ? scoreThresholdInputValue : scoreThreshold"
+          (ngModelChange)="onManualChange($event)"
+          (keydown)="onManualKeydown($event)"
+          (paste)="onManualPaste($event)"
+          (focus)="onManualFocus()"
+          (blur)="onManualBlur()"
+          [attr.aria-label]="topTitle"
+        />
+        @if (cfg.unit) {
+          <span class="value-unit">{{ cfg.unit }}</span>
+        }
+    </div>
+
+    <div class="status-pill" [ngClass]="'pill-' + cfg.mode + '-' + levelClass">
+      <span class="status-dot"></span>
+      {{ currentSectionLabel }}
+    </div>
+  </div>
+
+  <div class="track-wrapper">
+    <div class="track-bg" [style]="trackStyle"></div>
+    <input
+      id="score-threshold-slider"
+      type="range"
+      class="slider"
+      [min]="cfg.min" [max]="cfg.max" [step]="cfg.step"
+      [value]="scoreThreshold"
+      (input)="onSliderInput($event)"
+    />
+  </div>
+
+  <div class="track-bounds">
+    <span>{{ cfg.minLabel }}</span>
+    <span>{{ cfg.maxLabel }}</span>
+  </div>
+</section>

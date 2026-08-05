@@ -1,0 +1,6 @@
+requests
+pandas
+geopandas
+scikit-learn
+xgboost
+optuna

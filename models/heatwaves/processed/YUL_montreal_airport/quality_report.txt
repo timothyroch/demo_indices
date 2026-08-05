@@ -1,0 +1,75 @@
+=================================================================
+VILLE_IA — Data Quality Report — Montreal / Trudeau Airport
+Generated: 2026-03-02 16:40:25
+=================================================================
+
+Station group: YUL_montreal_airport
+Stations:      5415 (TRUDEAU INTL (old)), 51157 (MONTREAL INTL A)
+Rows:          3975
+Columns:       48
+Date range:    2000-05-01 → 2025-09-27
+
+Expected summer days: 3975
+Actual days:          3975
+Missing days:         0
+
+Missing values per column:
+  Column                               Missing        %
+  ----------------------------------- -------- --------
+  temp_max_c                                41     1.0%
+  temp_min_c                                37     0.9%
+  temp_mean_c                               45     1.1%
+  total_rain_mm                             20     0.5%
+  total_snow_cm                             18     0.5%
+  total_precip_mm                           19     0.5%
+  tmax_roll_3d                               1     0.0%
+  tmin_roll_3d                               1     0.0%
+  tmax_change_1d                            74     1.9%
+  tmax_change_3d                            82     2.1%
+  temp_anomaly                              41     1.0%
+  heat_degree_above_30                      41     1.0%
+  humidex                                  906    22.8%
+  humidex_roll_3d                          385     9.7%
+
+Summary statistics (key columns):
+       temp_max_c  temp_min_c  humidity_mean_pct  wind_speed_mean_kmh
+count     3934.00     3938.00            3975.00              3975.00
+mean        23.70       13.53              67.20                14.50
+std          5.04        4.79              11.74                 5.06
+min          5.10       -1.20              23.83                 2.92
+25%         20.50       10.22              59.79                10.75
+50%         24.30       14.00              67.71                13.88
+75%         27.40       17.10              75.29                17.62
+max         36.60       24.80              97.08                40.42
+
+Heatwave event days per year:
+  2000:   0 days
+  2001:   3 days  ███
+  2002:   6 days  ██████
+  2003:   0 days
+  2004:   0 days
+  2005:   0 days
+  2006:   0 days
+  2007:   0 days
+  2008:   0 days
+  2009:   0 days
+  2010:   4 days  ████
+  2011:   4 days  ████
+  2012:   0 days
+  2013:   0 days
+  2014:   0 days
+  2015:   0 days
+  2016:   0 days
+  2017:   0 days
+  2018:   6 days  ██████
+  2019:   0 days
+  2020:   8 days  ████████
+  2021:   0 days
+  2022:   0 days
+  2023:   0 days
+  2024:   3 days  ███
+  2025:   8 days  ████████
+
+Target class balance (target_heatwave_3d):
+  Positive (heatwave coming):     64 (1.61%)
+  Negative (no heatwave):       3911 (98.39%)

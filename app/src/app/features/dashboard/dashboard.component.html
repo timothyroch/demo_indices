@@ -1,0 +1,42 @@
+<div class="dashboard">
+  <app-navbar />
+  <main class="map-container">
+    <app-filter
+      [riskFilter]="riskFilter"
+      [scoreThreshold]="scoreThreshold"
+      [riskKind]="riskKind"
+      [socialFilter]="socialFilter"
+      (riskFilterChange)="onRiskFilterChange($event)"
+      (scoreThresholdChange)="onScoreThresholdChange($event)"
+      (socialFilterChange)="onSocialFilterChange($event)"/>
+    <app-map
+      [selectedFeatureId]="mapSelectedFeatureId"
+      [riskBandFilter]="selectedRiskLevels"
+      [scoreThreshold]="scoreThreshold"
+      [riskKind]="riskKind"
+      [socialFilter]="socialFilter"
+      (mapClick)="onMapClick($event)"
+    />
+    <div class="side-panels" [class.side-panels--dual]="secondaryPanelOpen && layout.comparisonAllowed()">
+      @if (secondaryPanelOpen && layout.comparisonAllowed() && selectedFeatureId) {
+        <app-side-panel
+          panelSlot="secondary"
+          [coords]="secondaryPanelCoords"
+          [zoneData]="secondaryZoneData"
+          [zoneId]="secondaryFeatureId"
+          (closePanel)="onSecondaryPanelClose()"
+        />
+      }
+      <app-side-panel
+        panelSlot="primary"
+        [secondaryOpened]="secondaryPanelOpen && layout.comparisonAllowed()"
+        [comparisonAllowed]="layout.comparisonAllowed()"
+        [coords]="panelCoords"
+        [zoneData]="selectedZoneData"
+        [zoneId]="selectedFeatureId"
+        (closePanel)="onPanelClose()"
+        (openSecondaryPanel)="onOpenSecondaryPanel()"
+      />
+    </div>
+  </main>
+</div>

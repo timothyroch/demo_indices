@@ -1,0 +1,49 @@
+<app-tab-status-gate
+  [status]="status"
+  [errorMessage]="errorMessage"
+> 
+  <div class="risk-indicator">
+    <div class="tab-title">{{ floodStrings.FLUVIAL_SECTION_TITLE }}</div>
+  </div>
+
+  <app-floods-today-content
+    [probabilityLabel]="floodProbabilityLabel"
+    [riskScore]="riskScore"
+    confidenceStd=""
+    [infobubbleProbabilityText]="infobubbleProbabilityText"
+    [infobubbleRiskText]="infobubbleRiskText"
+    [riskLevelClass]="riskLevelClass"
+    [riskLevelLabel]="riskLevelLabel"
+    [activePartnerCity]="activePartnerCity"
+    [zoneData]="zoneDataService.getCurrentZoneData(this.panelSlot)"
+  />
+  <app-explainability-content
+    [explainability]="prediction?.explainability ?? null"
+  />
+  <app-recommendations
+    [contentByCity]="fluvialPublicRecoByCity"
+    riskKind="crues"
+    [severity]="recommendationSeverity"
+    [activePartnerCity]="activePartnerCity"
+    [recoDayOptions]="recoDayOptions"
+    [(selectedDayId)]="recoDayId" 
+    (selectedDayIdChange)="onRecoDayChange($event)"
+  />
+  @if (prediction?.forecast?.length) {
+    <app-forecast-content
+      [forecast]="prediction!.forecast!"
+      [simulatedForecast]="simulatedForecast"
+      [columns]="columns"
+      [sectionSubtitle]="floodStrings.FLUVIAL_FORECAST_SUBTITLE"
+      [isSimulationOpen]="isSimulationOpen"
+      [isSimulating]="isSimulating"
+      (openSimulation)="openSimulation()"
+      (closeSimulation)="closeSimulation()"
+      (applySimulation)="applySimulation()"
+      (resetSimulation)="resetSimulationDetails()"
+    />
+  }
+  
+  
+  <app-risk-zones-content [config]="riskZoneConfig" [panelSlot]="panelSlot" />
+</app-tab-status-gate>

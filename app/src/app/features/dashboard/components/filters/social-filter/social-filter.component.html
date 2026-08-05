@@ -1,0 +1,61 @@
+<div class="social-filter">
+    <span class="section-title">{{ strings.SOCIAL_FILTERS_TITLE }}</span>
+
+    <div class="social-filter-item">
+        <label class="social-label" for="pct-65-plus-min">{{ strings.PCT_65_PLUS_LABEL }}</label>
+        <div class="social-filter-inputs">
+            <input id="pct-65-plus-min" type="number" class="social-input"
+                [placeholder]="strings.PLACEHOLDER_MIN" min="0" max="100" step="0.1"
+                [(ngModel)]="socialFilter.pct_65_plus.min" (change)="onSocialFilterChange()" 
+            />
+            <span class="separator">{{ strings.RANGE_SEPARATOR }}</span>
+            <input id="pct-65-plus-max" type="number" class="social-input"
+                [placeholder]="strings.PLACEHOLDER_MAX" min="0" max="100" step="0.1"
+                [(ngModel)]="socialFilter.pct_65_plus.max" (change)="onSocialFilterChange()" 
+            />
+            
+            <span class="unit">{{ strings.PERCENT_UNIT }}</span>
+        </div>
+    </div>
+
+    <div class="social-filter-item">
+    <label class="social-label" for="revenu-min">{{ strings.REVENU_MEDIAN_LABEL }}</label>
+    <div class="social-filter-inputs">
+        <input id="revenu-min" type="number" class="social-input"
+        [placeholder]="strings.PLACEHOLDER_MIN" min="0" step="1000"
+        [(ngModel)]="socialFilter.revenu_median_menage.min" (change)="onSocialFilterChange()" />
+        <span class="separator">{{ strings.RANGE_SEPARATOR }}</span>
+        <input id="revenu-max" type="number" class="social-input"
+        [placeholder]="strings.PLACEHOLDER_MAX" min="0" step="1000"
+        [(ngModel)]="socialFilter.revenu_median_menage.max" (change)="onSocialFilterChange()" />
+        <span class="unit">{{ strings.CURRENCY_UNIT }}</span>
+    </div>
+    </div>
+
+    <div class="social-filter-item">
+    <label class="social-label" for="gini-min">{{ strings.GINI_INDEX_LABEL }}</label>
+    <div class="social-filter-inputs">
+        <input id="gini-min" type="number" class="social-input"
+        [placeholder]="strings.PLACEHOLDER_MIN" min="0" max="1" step="0.01"
+        [(ngModel)]="socialFilter.gini.min" (change)="onSocialFilterChange()" />
+        <span class="separator">{{ strings.RANGE_SEPARATOR }}</span>
+        <input id="gini-max" type="number" class="social-input"
+        [placeholder]="strings.PLACEHOLDER_MAX" min="0" max="1" step="0.01"
+        [(ngModel)]="socialFilter.gini.max" (change)="onSocialFilterChange()" />
+    </div>
+    </div>
+
+    <div class="social-filter-item">
+    <label class="social-label" for="logement-min">{{ strings.LOGEMENT_LABEL }}</label>
+    <div class="social-filter-inputs">
+        <input id="logement-min" type="number" class="social-input"
+        [placeholder]="strings.PLACEHOLDER_MIN" min="0" max="100" step="0.1"
+        [(ngModel)]="socialFilter.logement_reparations_majeures.min" (change)="onSocialFilterChange()" />
+        <span class="separator">{{ strings.RANGE_SEPARATOR }}</span>
+        <input id="logement-max" type="number" class="social-input"
+        [placeholder]="strings.PLACEHOLDER_MAX" min="0" max="100" step="0.1"
+        [(ngModel)]="socialFilter.logement_reparations_majeures.max" (change)="onSocialFilterChange()" />
+        <span class="unit">{{ strings.PERCENT_UNIT }}</span>
+    </div>
+    </div>
+</div>

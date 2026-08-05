@@ -1,0 +1,75 @@
+@if (probabilityLabel) {
+  <div class="panel-section">
+    <div class="risk-indicator">
+      <div class="section-title">{{ todayTitleString }}</div>
+      <app-risk-badge
+        [riskLevelClass]="riskLevelClass"
+        [riskLevelLabel]="riskLevelLabel"
+      />
+    </div>      
+    <div class="panel-row">
+      <span class="panel-row-key">{{ strings.PROBABILITY_LABEL }}</span>
+      <span class="panel-row-val">{{ probabilityLabel }} {{ confidenceStd }}</span>
+      <app-info-bubble [message]="infobubbleProbabilityText" />
+    </div>
+    <div class="panel-row">
+      <span class="panel-row-key">{{ strings.VULNERABILITY_LABEL }}</span>
+      <span class="panel-row-val">{{ riskScore }}</span>
+      <app-info-bubble [templateContent]="riskInfoTpl" [message]="infobubbleRiskText" />
+    </div>
+    @if (rainIntensityInfo) {
+      <div class="panel-row">
+        <span class="panel-row-key">{{ strings.RAIN_INTENSITY_LABEL }}</span>
+        <span class="panel-row-val">{{ rainIntensityInfo.label }}</span>
+        @if (rainIntensityInfo.info) {        
+          <app-info-bubble [message]="rainIntensityInfo.info" />
+        }
+      </div>
+    }
+  </div>
+}
+
+<ng-template #riskInfoTpl>
+  <div class="risk-info-bubble">
+    @if (riskInfoData.floodableLabel) {
+      <div class="risk-info-zone-badge" [class.floodable]="riskInfoData.isFloodable" [class.not-floodable]="!riskInfoData.isFloodable">
+        {{ riskInfoData.floodableLabel }}
+      </div>
+    }
+
+    @if (riskInfoData.stats.length) {
+      <div class="risk-info-stats">
+        @for (stat of riskInfoData.stats; track stat.label) {
+          <div class="risk-info-stat-row">
+            <span class="risk-info-stat-label">{{ stat.label }}</span>
+            <span class="risk-info-stat-value" [class.vuln]="stat.comparison === 'above' || stat.comparison === 'below'">
+              {{ stat.value }}
+              @if (stat.comparison === 'above') {
+                <span class="risk-info-arrow risk-info-arrow--up">↑</span>
+              } @else if (stat.comparison === 'below') {
+                <span class="risk-info-arrow risk-info-arrow--down">↓</span>
+              }
+            </span>
+          </div>
+        }
+      </div>
+
+      @if (riskInfoData.synthesisText) {
+        <div>
+          {{ riskInfoData.synthesisText }}
+        </div>
+      }
+    }
+
+    @if (riskInfoData.rawEntries.length) {
+      <div class="risk-info-raw">
+        @for (entry of riskInfoData.rawEntries; track entry.key) {
+          <div class="risk-info-raw-row">
+            <span class="risk-info-raw-key">{{ entry.key }}</span>
+            <span class="risk-info-raw-val">{{ entry.value }}</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</ng-template>

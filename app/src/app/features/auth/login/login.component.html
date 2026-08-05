@@ -1,0 +1,39 @@
+<div class="login-page">
+  <div class="login-card">
+    <img src="assets/images/iriu-logo.png" [alt]="strings.LOGO_ALT" class="login-logo" />
+    <h1 class="login-title">{{ strings.TITLE }}</h1>
+    <p class="login-subtitle">{{ strings.SUBTITLE }}</p>
+
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">{{ strings.USERNAME_LABEL }}</label>
+        <input
+          id="username"
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          autocomplete="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">{{ strings.PASSWORD_LABEL }}</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+      @if (error()) {
+        <p class="error-msg" role="alert">{{ error() }}</p>
+      }
+      <button type="submit" class="btn-primary" [disabled]="loading()">
+        {{ loading() ? strings.SUBMIT_BUTTON_LOADING : strings.SUBMIT_BUTTON }}
+      </button>
+    </form>
+    <p class="login-hint">{{ strings.HINT }}</p>
+  </div>
+</div>

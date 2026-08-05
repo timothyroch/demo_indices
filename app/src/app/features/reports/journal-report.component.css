@@ -1,0 +1,116 @@
+.journal-report-page {
+  min-height: 100vh;
+  background: var(--background-light, #f5f5f5);
+  color: var(--text-dark, #1a1a1a);
+}
+
+.settings-header {
+  background: var(--primary-dark, #0d2137);
+  color: var(--white, #fff);
+  padding: 1.5rem 2rem;
+}
+
+.settings-header .back-link {
+  color: var(--accent-teal, #4dd0e1);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.settings-header .back-link:hover {
+  text-decoration: underline;
+}
+
+.settings-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.settings-header .subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  max-width: 42rem;
+}
+
+.report-content {
+  padding: 2rem;
+  max-width: 720px;
+}
+
+.report-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .report-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.settings-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.settings-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+
+.settings-form .checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.settings-form .checkbox-label input[type='checkbox'] {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.settings-form input[type='date'],
+.settings-form input[type='number'] {
+  width: 100%;
+  max-width: 16rem;
+  padding: 0.45rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.field-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  opacity: 0.85;
+}
+
+.message-error {
+  color: #b71c1c;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--primary-dark, #0d2137);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ville-ia-etl"
+version = "0.2.0"
+description = "VILLE_IA — ETL pipeline for Montreal heatwave prediction data"
+authors = ["VILLE_IA Team"]
+readme = "README.md"
+packages = [{include = "ville_ia_etl"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31"
+pandas = "^2.1"
+numpy = "^1.26"
+tqdm = "^4.66"
+
+[tool.poetry.scripts]
+download = "ville_ia_etl.01_download:main"
+process = "ville_ia_etl.run_pipeline:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

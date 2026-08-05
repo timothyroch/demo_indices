@@ -1,0 +1,24 @@
+<div class="risk-filter-panel" [attr.aria-label]="strings.FILTER_ARIA_LABEL" [class.collapsed]="isCollapsed">
+    <div class="filter-header">
+        <span class="map-type-value">{{ strings.MAP_NAME }}</span>
+        <button class="collapse-btn" (click)="toggleCollapse()" [attr.aria-label]="isCollapsed ? strings.EXPAND_ARIA : strings.COLLAPSE_ARIA">
+            {{ isCollapsed ? strings.EXPAND_ICON : strings.COLLAPSE_ICON }}
+        </button>
+    </div>
+
+    @if (!isCollapsed) {
+    <div class="filter-content">
+        <app-risk-filter
+        [scoreThreshold]="scoreThreshold"
+        [riskKind]="riskKind"
+        (scoreThresholdChange)="scoreThresholdChange.emit($event)">
+      </app-risk-filter>
+
+      <app-social-filter
+        [socialFilter]="socialFilter"
+        (socialFilterChange)="socialFilterChange.emit($event)">
+      </app-social-filter>
+    </div>
+    }
+
+</div>

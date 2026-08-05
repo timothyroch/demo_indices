@@ -1,0 +1,12 @@
+.footer {
+  flex-shrink: 0;
+  padding: 0.5rem 1.5rem;
+  background: var(--primary-dark);
+  color: var(--white);
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.footer p {
+  margin: 0;
+}

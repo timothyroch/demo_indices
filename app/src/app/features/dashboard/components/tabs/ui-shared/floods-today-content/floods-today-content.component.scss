@@ -1,0 +1,38 @@
+.panel-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 0.875rem;
+}
+
+.panel-row-key {
+  font-weight: 400;
+  justify-self: start;
+}
+
+.panel-row-val {
+  font-weight: 600;
+  color: #111827;
+  justify-self: end;
+}
+
+.panel-row-info-bubble {
+  justify-self: end;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: #374151;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.panel-row-info-bubble:hover {
+  background-color: #d1d5db;
+}

@@ -1,0 +1,43 @@
+<div class="map-container">
+  @if (layersLoading) {
+    <div class="map-loader" aria-live="polite">
+      <div class="map-loader-spinner"></div>
+      <p class="map-loader-text">{{ strings.LOADING }}</p>
+    </div>
+  }
+  <div #mapContainer class="map"></div>
+  <div class="zoom-slider-wrapper" [attr.aria-label]="strings.ZOOM_ARIA">
+    <button
+      type="button"
+      class="zoom-step-btn"
+      (click)="onZoomStep(-zoomStep)"
+      [attr.aria-label]="strings.ZOOM_OUT"
+      [title]="strings.ZOOM_OUT"
+    >
+      {{ strings.ZOOM_MINUS }}
+    </button>
+    <input
+      type="range"
+      class="zoom-slider"
+      [min]="minZoom"
+      [max]="maxZoom"
+      [step]="zoomStep"
+      [(ngModel)]="zoomLevel"
+      (input)="onZoomSliderChange()"
+    />
+    <button
+      type="button"
+      class="zoom-step-btn"
+      (click)="onZoomStep(zoomStep)"
+      [attr.aria-label]="strings.ZOOM_IN"
+      [title]="strings.ZOOM_IN"
+    >
+      {{ strings.ZOOM_PLUS }}
+    </button>
+  </div>
+  @if (hoveredCityName) {
+    <div class="hover-label" [style.left.px]="hoverX" [style.top.px]="hoverY">
+      {{ hoveredCityName }}
+    </div>
+  }
+</div>

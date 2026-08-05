@@ -1,0 +1,18 @@
+<div class="sim-mode-toggle">
+    <button
+        type="button"
+        class="sim-mode-btn"
+        [class.sim-mode-btn--active]="!isSimulationOpen"
+        (click)="forecastClick.emit()"
+    >
+    {{ simulationStrings.FORECAST_MODE_LABEL }}
+    </button>
+    <button
+        type="button"
+        class="sim-mode-btn"
+        [class.sim-mode-btn--active]="isSimulationOpen"
+        (click)="simulationClick.emit()"
+    >
+    {{ simulationStrings.SIMULATION_MODE_LABEL }}
+    </button>
+</div>

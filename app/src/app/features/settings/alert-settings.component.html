@@ -1,0 +1,190 @@
+<div class="alert-settings">
+  <header class="settings-header">
+    <a routerLink="/" class="back-link">{{ s.backLink }}</a>
+    <h1>{{ s.title }}</h1>
+    <p class="subtitle">
+      {{ s.subtitle }}
+    </p>
+  </header>
+  <main class="settings-content">
+    @if (loading) {
+      <p class="loading">{{ s.loading }}</p>
+    } @else {
+      <form (ngSubmit)="save()" class="settings-form">
+        <p class="channels-intro">{{ s.channelsIntro }}</p>
+        <div class="form-group">
+          <label for="frequency">{{ s.frequencyLabel }}</label>
+          <input
+            id="frequency"
+            type="range"
+            min="4"
+            max="24"
+            step="1"
+            [(ngModel)]="frequencyHours"
+            name="frequencyHours"
+          />
+          <span class="threshold-value">{{ frequencyHours }} h</span>
+          <p class="field-hint">{{ s.frequencyHint }}</p>
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              [(ngModel)]="settings.alert_via_sms"
+              name="alertViaSms"
+            />
+            {{ s.alertsViaSms }}
+          </label>
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              [(ngModel)]="settings.alert_via_email"
+              name="alertViaEmail"
+            />
+            {{ s.alertsViaEmail }}
+          </label>
+        </div>
+
+        <div class="alert-types-row">
+        <fieldset class="alert-type-block">
+          <legend class="alert-type-legend">{{ s.pluvialTitle }}</legend>
+          <div class="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.alert_pluvial_enabled"
+                name="alertPluvialEnabled"
+              />
+              {{ s.enableType }}
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="thPluvial">{{ s.thresholdPluvialLabel }}</label>
+            <input
+              id="thPluvial"
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              [(ngModel)]="thresholdPluvial"
+              name="thresholdPluvial"
+            />
+            <span class="threshold-value">{{ thresholdPluvial }} %</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="alert-type-block">
+          <legend class="alert-type-legend">{{ s.fluvialTitle }}</legend>
+          <div class="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.alert_fluvial_enabled"
+                name="alertFluvialEnabled"
+              />
+              {{ s.enableType }}
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="thFluvial">{{ s.thresholdFluvialLabel }}</label>
+            <input
+              id="thFluvial"
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              [(ngModel)]="thresholdFluvial"
+              name="thresholdFluvial"
+            />
+            <span class="threshold-value">{{ thresholdFluvial }} %</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="alert-type-block">
+          <legend class="alert-type-legend">{{ s.heatwaveTitle }}</legend>
+          <div class="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.alert_heatwave_enabled"
+                name="alertHeatwaveEnabled"
+              />
+              {{ s.enableType }}
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="thHeat">{{ s.thresholdHeatwaveLabel }}</label>
+            <input
+              id="thHeat"
+              type="range"
+              min="25"
+              max="55"
+              step="1"
+              [(ngModel)]="thresholdHeatwaveHumidex"
+              name="thresholdHeatwaveHumidex"
+            />
+            <span class="threshold-value">{{ thresholdHeatwaveHumidex }}</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="alert-type-block">
+          <legend class="alert-type-legend">{{ s.snowTitle }}</legend>
+          <div class="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="settings.alert_snow_enabled"
+                name="alertSnowEnabled"
+              />
+              {{ s.enableType }}
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="thSnow">{{ s.thresholdSnowLabel }}</label>
+            <input
+              id="thSnow"
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              [(ngModel)]="thresholdSnow"
+              name="thresholdSnow"
+            />
+            <span class="threshold-value">{{ thresholdSnow }} %</span>
+          </div>
+        </fieldset>
+        </div>
+
+        @if (message) {
+          <p class="msg msg-success">{{ message }}</p>
+        }
+        @if (messageError) {
+          <p class="msg msg-error">{{ messageError }}</p>
+        }
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" [disabled]="saving">
+            {{ saving ? s.saveButtonLoading : s.saveButton }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            [disabled]="testingSms || !auth.currentUser()?.phone"
+            (click)="sendTestSms()"
+          >
+            {{ testingSms ? s.testSmsButtonLoading : s.testSmsButton }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            [disabled]="testingEmail || !auth.currentUser()?.email"
+            (click)="sendTestEmail()"
+          >
+            {{ testingEmail ? s.testEmailButtonLoading : s.testEmailButton }}
+          </button>
+        </div>
+      </form>
+    }
+  </main>
+</div>

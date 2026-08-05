@@ -1,0 +1,17 @@
+<nav class="navbar">
+  <span class="navbar-brand">{{ labels.BRAND }}</span>
+  <div class="navbar-user">
+    <a routerLink="/settings" class="nav-link">{{ labels.NAV_LINK_ALERTS }}</a>
+    <a routerLink="/reports" class="nav-link">{{ labels.NAV_LINK_REPORTS }}</a>
+    @if (authService.isAdmin) {
+      <a routerLink="/admin/users" class="nav-link">{{ labels.NAV_LINK_USERS }}</a>
+    }
+    <span class="user-label">{{ authService.currentUser()?.username ?? labels.USER_LABEL }}</span>
+    <div class="user-menu">
+      <button type="button" class="user-avatar" [title]="authService.currentUser()?.username ?? ''">
+        {{ (authService.currentUser()?.username ?? 'U').charAt(0).toUpperCase() }}
+      </button>
+      <button type="button" class="btn-logout" (click)="authService.logout()">{{ labels.BTN_LOGOUT }}</button>
+    </div>
+  </div>
+</nav>

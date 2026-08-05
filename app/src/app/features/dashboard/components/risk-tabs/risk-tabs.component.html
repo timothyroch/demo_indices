@@ -1,0 +1,23 @@
+<div class="tabs" role="tablist">
+  @for (tab of tabs; track tab.id) {
+    <button
+      class="tab"
+      role="tab"
+      [ngStyle]="{ 'background-color': tab.color }"
+      [class.tab-active]="activeTab === tab.id"
+      [class.tab-disabled]="tab.disabled"
+      [attr.aria-selected]="activeTab === tab.id"
+      [attr.aria-label]="tab.label"
+      [attr.title]="tab.label"
+      [disabled]="tab.disabled ?? false"
+      (click)="select(tab.id)"
+    >
+      <img [src]="tab.svg" [alt]="tab.label" class="tab-icon" />
+    </button>
+  }
+</div>
+
+<app-pluvial-floods-content [hidden]="activeTab !== 'pluvial'" [panelSlot]="panelSlot" />
+<app-fluvial-floods-content [hidden]="activeTab !== 'crues'" [panelSlot]="panelSlot" />
+<app-heatwave-content [hidden]="activeTab !== 'canicules'" [panelSlot]="panelSlot" />
+<app-snow-content [hidden]="activeTab !== 'neige'" [panelSlot]="panelSlot" />

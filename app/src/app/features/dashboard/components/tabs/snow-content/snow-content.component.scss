@@ -1,0 +1,89 @@
+.sw-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.sw-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.15rem;
+  min-height: 60px;
+}
+
+.sw-metric-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
+  width: 100%;
+  order: -1;
+}
+
+.sw-metric-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  text-align: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.sw-metric-info {
+  flex-shrink: 0;
+}
+
+.sw-metric--with-info .sw-metric-label-row .sw-metric-label {
+  flex: 1 1 auto;
+}
+
+.sw-metric-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.sw-explain {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.sw-explain-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.sw-explain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sw-explain-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.8rem;
+  gap: 0.5rem;
+}
+
+.sw-explain-label {
+  color: #374151;
+  flex: 1;
+  min-width: 0;
+}
+
+.sw-explain-value {
+  font-weight: 600;
+  color: #111827;
+  flex-shrink: 0;
+}

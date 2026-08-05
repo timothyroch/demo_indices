@@ -1,0 +1,62 @@
+<div class="journal-report-page">
+  <header class="settings-header">
+    <a routerLink="/" class="back-link">{{ s.backLink }}</a>
+    <h1>{{ s.title }}</h1>
+    <p class="subtitle">{{ s.subtitle }}</p>
+  </header>
+  <main class="report-content">
+    <form (ngSubmit)="generate()" class="settings-form report-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateFrom">{{ s.dateFromLabel }}</label>
+          <input id="dateFrom" type="date" [(ngModel)]="logDateFrom" name="logDateFrom" />
+        </div>
+        <div class="form-group">
+          <label for="dateTo">{{ s.dateToLabel }}</label>
+          <input id="dateTo" type="date" [(ngModel)]="logDateTo" name="logDateTo" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="maxEntries">{{ s.maxEntriesLabel }}</label>
+        <input
+          id="maxEntries"
+          type="number"
+          min="10"
+          max="2000"
+          step="10"
+          [(ngModel)]="maxEntries"
+          name="maxEntries"
+        />
+        <p class="field-hint">{{ s.maxEntriesHint }}</p>
+      </div>
+      <div class="form-group form-group-checkbox">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [(ngModel)]="includeActionLogs"
+            name="includeActionLogs"
+          />
+          {{ s.includeActionLogsLabel }}
+        </label>
+        <p class="field-hint">{{ s.includeActionLogsHint }}</p>
+      </div>
+      <div class="form-group form-group-checkbox">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [(ngModel)]="includeModelDataSections"
+            name="includeModelDataSections"
+          />
+          {{ s.includeModelDataSectionsLabel }}
+        </label>
+        <p class="field-hint">{{ s.includeModelDataSectionsHint }}</p>
+      </div>
+      @if (messageError) {
+        <p class="message-error" role="alert">{{ messageError }}</p>
+      }
+      <button type="submit" class="btn-primary" [disabled]="generating">
+        {{ generating ? s.generateButtonLoading : s.generateButton }}
+      </button>
+    </form>
+  </main>
+</div>

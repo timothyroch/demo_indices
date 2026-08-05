@@ -1,0 +1,76 @@
+<ng-template #panelContent>
+  <div class="panel-inner">
+
+    <div class="panel-header">
+      <div class="panel-header-top">
+        <div class="panel-header-titles">
+          @if (panelHeaderTitle) {
+            <h3
+              class="panel-header-title"
+              [class.panel-header-title--muted]="showSecondaryPlaceholder || (!!coords && !!zoneId && !placeLabel)"
+            >{{ panelHeaderTitle }}</h3>
+          }
+        </div>
+        <button class="panel-close" (click)="onClose()" [attr.aria-label]="strings.CLOSE_ARIA">{{ strings.CLOSE_ICON }}</button>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      @if (showSecondaryPlaceholder) {
+        <div class="panel-empty">{{ strings.SECONDARY_HINT }}</div>
+      } @else if (weatherState.status === 'loading') {
+        <div class="panel-loading">
+          <div class="panel-spinner"></div>
+          <span>{{ strings.LOADING }}</span>
+        </div>
+      } @else if (weatherState.status === 'error') {
+        <div class="panel-empty">{{ weatherState.errorMessage }}</div>
+      } @else if (weatherState.status === 'ready') {
+
+        @if (weatherLines.length) {
+          <div class="weather-section">
+            <div class="section-title">{{ strings.WEATHER_SECTION_TITLE }}</div>
+            @for (line of weatherLines; track line.key) {
+              <div class="panel-row">
+                <span class="panel-row-key">{{ line.key }}</span>
+                <span class="panel-row-val">{{ line.value }}</span>
+              </div>
+            }
+
+            @if (weatherState.data?.source) {
+              <div class="source">
+                Source: {{ weatherState.data?.source }}
+              </div>
+            }
+          </div>
+
+        }
+        <div class="risk-contents-layout">
+          <app-risk-tabs [panelSlot]="panelSlot" />
+        </div>
+      }
+    </div>
+
+  </div>
+</ng-template>
+
+@if (panelSlot === 'primary') {
+  <div class="panel-outer-primary" [class.panel-outer-primary--open]="visible">
+    @if (!secondaryOpened && comparisonAllowed) {
+      <button
+        type="button"
+        class="panel-add-external"
+        (click)="onOpenSecondary()"
+        [attr.aria-label]="strings.ADD_PANEL_ARIA"
+        [attr.title]="strings.ADD_PANEL_TOOLTIP"
+      >+</button>
+    }
+    <div class="panel panel--docked">
+      <ng-container *ngTemplateOutlet="panelContent" />
+    </div>
+  </div>
+} @else {
+  <div class="panel" [class.panel--open]="visible">
+    <ng-container *ngTemplateOutlet="panelContent" />
+  </div>
+}

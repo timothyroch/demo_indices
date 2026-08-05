@@ -1,0 +1,78 @@
+<app-tab-status-gate
+  [status]="status"
+  [errorMessage]="errorMessage"
+>  
+  @if (prediction) {
+    <div class="risk-indicator">
+      <div class="tab-title">{{ strings.TITLE }}</div>
+    </div>
+    @if (today) {
+      <div class="panel-section">
+        <div class="risk-indicator">
+          <div class="section-title">{{ sectionTitleStrings.TODAY_TITLE }}</div>
+          <app-risk-badge
+            [riskLevelClass]="riskLevelClass"
+            [riskLevelLabel]="riskLabel"
+          />
+        </div>
+        <div class="sw-metrics">
+          <div class="sw-metric">
+            <span class="sw-metric-label">{{ strings.METRIC_SNOW }}</span>
+            <span class="sw-metric-value">{{ today.total_snow_cm }}{{ strings.UNIT_CM }}</span>
+          </div>
+          <div class="sw-metric">
+            <span class="sw-metric-label">{{ strings.METRIC_TEMP }}</span>
+            <span class="sw-metric-value">{{ today.mean_temperature }}{{ strings.UNIT_DEGREE_C }}</span>
+          </div>
+          <div class="sw-metric sw-metric--with-info">
+            <div class="sw-metric-label-row">
+              <span class="sw-metric-label">{{ strings.RISK_LABEL }} <app-info-bubble [message]="strings.TOOLTIP_RISK_PERCENT" class="sw-metric-info" /></span>
+            </div>
+            <span class="sw-metric-value">{{ riskPct(today.prediction_value) }}{{ strings.UNIT_PERCENT }}</span>
+          </div>
+        </div>
+        <div class="sw-explain">
+          <div class="sw-explain-title">{{ strings.EXPLAIN_TITLE }}</div>
+          <div class="sw-explain-list">
+            @for (line of getRiskExplanationLines(today); track line.label) {
+              <div class="sw-explain-row">
+                <span class="sw-explain-label">{{ line.label }}</span>
+                <span class="sw-explain-value">{{ line.value }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <app-recommendations
+      [contentByCity]="snowPublicRecoByCity"
+      riskKind="neige"
+      [severity]="recommendationSeverity"
+      [activePartnerCity]="activePartnerCity"
+      [recoDayOptions]="recoDayOptions"
+      [(selectedDayId)]="recoDayId" 
+      (selectedDayIdChange)="onRecoDayChange($event)"
+    />
+
+    @if (prediction.daily_details.length) {
+      <app-forecast-content
+        [forecast]="prediction!.daily_details!"
+        [simulatedForecast]="simulatedForecast"
+        [columns]="columns"
+        [sectionSubtitle]="strings.SNOW_FORECAST_SUBTITLE"
+        [isSimulationOpen]="isSimulationOpen"
+        [isSimulating]="isSimulating"
+        [probabilityTooltip]="getProbabilityTooltip"
+        (openSimulation)="openSimulation()"
+        (closeSimulation)="closeSimulation()"
+        (applySimulation)="applySimulation()"
+        (resetSimulation)="resetSimulationDetails()"
+      />
+    }
+
+    <app-risk-zones-content
+      [panelSlot]="panelSlot"
+    />
+  }
+</app-tab-status-gate>

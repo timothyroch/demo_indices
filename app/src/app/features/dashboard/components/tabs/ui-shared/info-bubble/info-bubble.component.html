@@ -1,0 +1,27 @@
+@if (message !== "N/A") {
+  <div
+    class="info-bubble-wrapper"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()"
+  >
+    <button
+      type="button"
+      class="panel-row-info-bubble"
+      (click)="onToggle()"
+      [attr.aria-label]="message"
+    >
+      {{ symbol }}
+    </button>
+
+    @if (isOpen) {
+      <div class="info-bubble-tooltip">
+        @if (message) {
+          <div>{{ message }}</div>
+        }
+        @if (templateContent) {
+          <ng-container *ngTemplateOutlet="templateContent"></ng-container>
+        }
+      </div>
+    }
+  </div>
+}

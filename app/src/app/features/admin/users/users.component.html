@@ -1,0 +1,246 @@
+<div class="admin-users">
+  <header class="admin-header">
+    <a routerLink="/" class="back-link">{{ strings.BACK_LINK }}</a>
+    <h1>{{ strings.TITLE }}</h1>
+  </header>
+  <main class="admin-content">
+    <section class="create-user">
+      <h2>{{ strings.CREATE_ACCOUNT }}</h2>
+      <form (ngSubmit)="createUser()" class="user-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="new-username">{{ strings.USERNAME_LABEL }} <span class="required">*</span></label>
+            <input
+              id="new-username"
+              type="text"
+              [(ngModel)]="newUsername"
+              name="newUsername"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="new-password">{{ strings.PASSWORD_LABEL }} <span class="required">*</span></label>
+            <input
+              id="new-password"
+              type="password"
+              [(ngModel)]="newPassword"
+              name="newPassword"
+              required
+              minlength="8"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="new-email">{{ strings.EMAIL_LABEL }} <span class="required">*</span></label>
+            <input
+              id="new-email"
+              type="email"
+              [(ngModel)]="newEmail"
+              name="newEmail"
+              [placeholder]="strings.EMAIL_PLACEHOLDER"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="new-phone">{{ strings.PHONE_LABEL }} <span class="required">*</span></label>
+            <input
+              id="new-phone"
+              type="tel"
+              [(ngModel)]="newPhone"
+              name="newPhone"
+              [placeholder]="strings.PHONE_PLACEHOLDER"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="new-partner-city">{{ strings.PARTNER_CITY_LABEL }} <span class="required">*</span></label>
+            <select
+              id="new-partner-city"
+              name="newPartnerCity"
+              [(ngModel)]="newPartnerCity"
+              required
+            >
+              <option [value]="partnerCityId.Montreal">{{ strings.PARTNER_CITY_MONTREAL }}</option>
+              <option [value]="partnerCityId.Laval">{{ strings.PARTNER_CITY_LAVAL }}</option>
+            </select>
+          </div>
+        </div>
+        @if (message) {
+          <p class="msg msg-success">{{ message }}</p>
+        }
+        @if (messageError) {
+          <p class="msg msg-error">{{ messageError }}</p>
+        }
+        <button type="submit" class="btn-primary" [disabled]="loading">
+          {{ loading ? strings.CREATE_BUTTON_LOADING : strings.CREATE_BUTTON }}
+        </button>
+      </form>
+    </section>
+    <section class="user-list">
+      <h2>{{ strings.EXISTING_ACCOUNTS }}</h2>
+      @if (loadingList) {
+        <p class="list-loading">{{ strings.LOADING }}</p>
+      } @else {
+        <ul class="users">
+          @for (u of users; track u.id) {
+            <li class="user-item">
+              <div class="user-info">
+                <span class="user-name">{{ u.username }}</span>
+                @if (u.is_admin) {
+                  <span class="badge badge-admin">{{ strings.ADMIN_BADGE }}</span>
+                }
+                @if (!u.is_admin) {
+                  <span class="user-partner-city" [title]="strings.PARTNER_CITY_LABEL">
+                    {{ strings.PARTNER_CITY_SHORT }} : {{ partnerCityLabel(u.partner_city) }}
+                  </span>
+                }
+                @if (u.email || u.phone) {
+                  <span class="user-contact">
+                    @if (u.email) {
+                      <span class="user-email" [title]="u.email">{{ u.email }}</span>
+                    }
+                    @if (u.email && u.phone) {
+                      <span class="user-sep"> · </span>
+                    }
+                    @if (u.phone) {
+                      <span class="user-phone">{{ u.phone }}</span>
+                    }
+                  </span>
+                }
+              </div>
+              @if (editingPasswordForId === u.id) {
+                <div class="user-actions-inline">
+                  <input
+                    type="password"
+                    [(ngModel)]="newPasswordForUser"
+                    name="newPasswordForUser"
+                    [placeholder]="strings.NEW_PASSWORD_PLACEHOLDER"
+                    class="inline-password"
+                  />
+                  <button type="button" class="btn-small btn-primary" (click)="saveNewPassword()" [disabled]="savingPassword">
+                    {{ savingPassword ? strings.SAVE_BUTTON_LOADING : strings.SAVE_BUTTON }}
+                  </button>
+                  <button type="button" class="btn-small btn-secondary" (click)="cancelEditPassword()">{{ strings.CANCEL_BUTTON }}</button>
+                </div>
+              } @else if (editingContactForId === u.id) {
+                <div class="user-actions-inline user-actions-contact">
+                  <input
+                    type="email"
+                    [(ngModel)]="editEmail"
+                    name="editEmail"
+                    [placeholder]="strings.EMAIL_LABEL"
+                    class="inline-email"
+                  />
+                  <input
+                    type="tel"
+                    [(ngModel)]="editPhone"
+                    name="editPhone"
+                    [placeholder]="strings.PHONE_LABEL"
+                    class="inline-phone"
+                  />
+                  <button type="button" class="btn-small btn-primary" (click)="saveContact()" [disabled]="savingContact">
+                    {{ savingContact ? strings.SAVE_BUTTON_LOADING : strings.SAVE_BUTTON }}
+                  </button>
+                  <button type="button" class="btn-small btn-secondary" (click)="cancelEditContact()">{{ strings.CANCEL_BUTTON }}</button>
+                </div>
+              } @else if (editingPartnerCityForId === u.id) {
+                <div class="user-actions-inline user-actions-partner-city">
+                  <select [(ngModel)]="editPartnerCity" name="editPartnerCity" class="inline-select">
+                    <option [value]="partnerCityId.Montreal">{{ strings.PARTNER_CITY_MONTREAL }}</option>
+                    <option [value]="partnerCityId.Laval">{{ strings.PARTNER_CITY_LAVAL }}</option>
+                  </select>
+                  <button type="button" class="btn-small btn-primary" (click)="savePartnerCity()" [disabled]="savingPartnerCity">
+                    {{ savingPartnerCity ? strings.SAVE_BUTTON_LOADING : strings.SAVE_BUTTON }}
+                  </button>
+                  <button type="button" class="btn-small btn-secondary" (click)="cancelEditPartnerCity()">{{ strings.CANCEL_BUTTON }}</button>
+                </div>
+              } @else {
+                <div class="user-actions">
+                  <button type="button" class="btn-small btn-secondary" (click)="startEditPassword(u)">
+                    {{ strings.CHANGE_PASSWORD }}
+                  </button>
+                  <button type="button" class="btn-small btn-secondary" (click)="startEditContact(u)">
+                    {{ strings.EDIT_CONTACT }}
+                  </button>
+                  @if (!u.is_admin) {
+                    <button type="button" class="btn-small btn-secondary" (click)="startEditPartnerCity(u)">
+                      {{ strings.EDIT_PARTNER_CITY }}
+                    </button>
+                  }
+                  <button type="button" class="btn-small btn-secondary" (click)="toggleLogs(u)">
+                    {{ viewingLogsForId === u.id ? strings.HIDE_LOGS : strings.VIEW_LOGS }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-small btn-danger"
+                    (click)="deleteUser(u)"
+                    [disabled]="deletingId === u.id"
+                  >
+                    {{ deletingId === u.id ? strings.DELETE_BUTTON_LOADING : strings.DELETE_BUTTON }}
+                  </button>
+                </div>
+              }
+              @if (viewingLogsForId === u.id) {
+                <div class="user-logs-panel">
+                  <h3>{{ strings.LOGS_TITLE }}</h3>
+                  <div class="logs-controls">
+                    <label>
+                      {{ strings.LOGS_FILTER_DATE }}
+                      <input type="text" [(ngModel)]="logsDate" placeholder="2026-03-18" />
+                    </label>
+                    <label>
+                      {{ strings.LOGS_FILTER_LIMIT }}
+                      <input type="number" min="1" max="500" [(ngModel)]="logsLimit" />
+                    </label>
+                    <button type="button" class="btn-small btn-primary" (click)="loadUserLogs()" [disabled]="loadingLogs">
+                      {{ strings.LOGS_LOAD_BUTTON }}
+                    </button>
+                  </div>
+
+                  @if (loadingLogs) {
+                    <p class="list-loading">{{ strings.LOGS_LOADING }}</p>
+                  } @else if (logsError) {
+                    <p class="msg msg-error">{{ logsError }}</p>
+                  } @else if (userLogs.length === 0) {
+                    <p class="list-empty">{{ strings.LOGS_EMPTY }}</p>
+                  } @else {
+                    <div class="logs-table-wrap">
+                      <table class="logs-table">
+                        <thead>
+                          <tr>
+                            <th>{{ strings.LOGS_COLUMN_TIME }}</th>
+                            <th>{{ strings.LOGS_COLUMN_ACTION }}</th>
+                            <th>{{ strings.LOGS_COLUMN_LABEL }}</th>
+                            <th>{{ strings.LOGS_COLUMN_ROUTE }}</th>
+                            <th>{{ strings.LOGS_COLUMN_PAYLOAD }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (log of userLogs; track log.id) {
+                            <tr>
+                              <td>{{ formatLogTimestamp(log.timestamp) }}</td>
+                              <td>{{ log.action }}</td>
+                              <td>{{ log.label || '—' }}</td>
+                              <td>{{ log.route || '—' }}</td>
+                              <td><code>{{ formatLogPayload(log.payload_json) }}</code></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  }
+                </div>
+              }
+            </li>
+          }
+        </ul>
+        @if (users.length === 0) {
+          <p class="list-empty">{{ strings.LIST_EMPTY }}</p>
+        }
+      }
+    </section>
+  </main>
+</div>

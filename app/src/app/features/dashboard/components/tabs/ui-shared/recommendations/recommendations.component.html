@@ -1,0 +1,241 @@
+<div class="panel-section reco-panel">
+  <button
+    type="button"
+    class="section-title reco-panel__toggle"
+    (click)="toggleExpanded()"
+    [attr.aria-expanded]="expanded"
+    [attr.aria-controls]="bodyId"
+  >
+    <span class="section-title">{{ recTitleString }}</span>
+    <span
+      class="reco-panel__chevron"
+      [class.reco-panel__chevron--collapsed]="!expanded"
+      aria-hidden="true"
+    >▼</span>
+  </button>
+
+  <div [id]="bodyId" [hidden]="!expanded" class="reco-panel__body">
+    @if (recoDayOptions.length > 0) {
+      <app-reco-day-select
+        [options]="recoDayOptions"
+        [selectedId]="selectedDayId"
+        (selectedIdChange)="onDayChange($event)"
+      />
+    }
+    
+    @if (useDualCity) {
+      <div class="dm-reco-dual">
+        @for (block of cityRecoBlocks; track block.key) {
+          <article
+            class="dm-reco-city"
+            [attr.aria-labelledby]="'dm-reco-city-title-' + block.key"
+          >
+            <h2 class="dm-reco-city__title" [id]="'dm-reco-city-title-' + block.key">
+              {{ block.label }}
+            </h2>
+
+            @if (severity === publicDecisionSeverity.None) {
+              <section
+                class="dm-reco dm-reco--none"
+                [attr.aria-labelledby]="'dm-reco-none-title-' + block.key"
+              >
+                <h3 [id]="'dm-reco-none-title-' + block.key" class="dm-reco__main-title">
+                  {{ block.content.none.title }}
+                </h3>
+                <ul class="dm-reco__list">
+                  @for (item of block.content.none.bullets; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </section>
+            }
+
+            @if (severity === publicDecisionSeverity.Normale) {
+              <section
+                class="dm-reco dm-reco--normale"
+                [attr.aria-labelledby]="'dm-reco-normal-title-' + block.key"
+              >
+                @for (section of block.content.normale; track $index) {
+                  @if ($first) {
+                    <h3
+                      [id]="'dm-reco-normal-title-' + block.key"
+                      class="dm-reco__main-title"
+                    >
+                      {{ section.title }}
+                    </h3>
+                    <ul class="dm-reco__list">
+                      @for (item of section.bullets; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  } @else {
+                    <div class="dm-reco__block">
+                      <h4 class="dm-reco__subtitle">{{ section.title }}</h4>
+                      <ul class="dm-reco__list">
+                        @for (item of section.bullets; track item) {
+                          <li>{{ item }}</li>
+                        }
+                      </ul>
+                    </div>
+                  }
+                }
+                @if (showAtRiskSection) {
+                  <div class="dm-reco__at-risk">
+                    <h4
+                      class="dm-reco__subtitle"
+                      [id]="'dm-reco-at-risk-n-' + block.key"
+                    >
+                      {{ block.content.atRisk.title }}
+                    </h4>
+                    <ul
+                      class="dm-reco__list dm-reco__list--compact"
+                      [attr.aria-labelledby]="'dm-reco-at-risk-n-' + block.key"
+                    >
+                      @for (item of block.content.atRisk.bullets; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+              </section>
+            }
+
+            @if (severity === publicDecisionSeverity.Extreme) {
+              <section
+                class="dm-reco dm-reco--extreme"
+                [attr.aria-labelledby]="'dm-reco-extreme-title-' + block.key"
+              >
+                @for (section of block.content.extreme; track $index) {
+                  @if ($first) {
+                    <h3
+                      [id]="'dm-reco-extreme-title-' + block.key"
+                      class="dm-reco__main-title"
+                    >
+                      {{ section.title }}
+                    </h3>
+                    <ul class="dm-reco__list">
+                      @for (item of section.bullets; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  } @else {
+                    <div class="dm-reco__block">
+                      <h4 class="dm-reco__subtitle">{{ section.title }}</h4>
+                      <ul class="dm-reco__list">
+                        @for (item of section.bullets; track item) {
+                          <li>{{ item }}</li>
+                        }
+                      </ul>
+                    </div>
+                  }
+                }
+                @if (showAtRiskSection) {
+                  <div class="dm-reco__at-risk">
+                    <h4
+                      class="dm-reco__subtitle"
+                      [id]="'dm-reco-at-risk-e-' + block.key"
+                    >
+                      {{ block.content.atRisk.title }}
+                    </h4>
+                    <ul
+                      class="dm-reco__list dm-reco__list--compact"
+                      [attr.aria-labelledby]="'dm-reco-at-risk-e-' + block.key"
+                    >
+                      @for (item of block.content.atRisk.bullets; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+              </section>
+            }
+
+            <p class="dm-reco-source">
+              <span class="dm-reco-source__label">Source :</span>
+              {{ block.source }}
+            </p>
+          </article>
+        }
+      </div>
+    } @else if (content) {
+      @if (severity === publicDecisionSeverity.None) {
+        <section class="dm-reco dm-reco--none" aria-labelledby="dm-reco-none-title">
+          <h3 id="dm-reco-none-title" class="dm-reco__main-title">{{ content.none.title }}</h3>
+          <ul class="dm-reco__list">
+            @for (item of content.none.bullets; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (severity === publicDecisionSeverity.Normale) {
+        <section class="dm-reco dm-reco--normale" aria-labelledby="dm-reco-normal-title">
+          @for (section of content.normale; track $index) {
+            @if ($first) {
+              <h3 id="dm-reco-normal-title" class="dm-reco__main-title">{{ section.title }}</h3>
+              <ul class="dm-reco__list">
+                @for (item of section.bullets; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            } @else {
+              <div class="dm-reco__block">
+                <h4 class="dm-reco__subtitle">{{ section.title }}</h4>
+                <ul class="dm-reco__list">
+                  @for (item of section.bullets; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          }
+          @if (showAtRiskSection) {
+            <div class="dm-reco__at-risk">
+              <h4 class="dm-reco__subtitle" id="dm-reco-at-risk-n">{{ content.atRisk.title }}</h4>
+              <ul class="dm-reco__list dm-reco__list--compact" aria-labelledby="dm-reco-at-risk-n">
+                @for (item of content.atRisk.bullets; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </section>
+      }
+
+      @if (severity === publicDecisionSeverity.Extreme) {
+        <section class="dm-reco dm-reco--extreme" aria-labelledby="dm-reco-extreme-title">
+          @for (section of content.extreme; track $index) {
+            @if ($first) {
+              <h3 id="dm-reco-extreme-title" class="dm-reco__main-title">{{ section.title }}</h3>
+              <ul class="dm-reco__list">
+                @for (item of section.bullets; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            } @else {
+              <div class="dm-reco__block">
+                <h4 class="dm-reco__subtitle">{{ section.title }}</h4>
+                <ul class="dm-reco__list">
+                  @for (item of section.bullets; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          }
+          @if (showAtRiskSection) {
+            <div class="dm-reco__at-risk">
+              <h4 class="dm-reco__subtitle" id="dm-reco-at-risk-e">{{ content.atRisk.title }}</h4>
+              <ul class="dm-reco__list dm-reco__list--compact" aria-labelledby="dm-reco-at-risk-e">
+                @for (item of content.atRisk.bullets; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </section>
+      }
+    }
+  </div>
+</div>
